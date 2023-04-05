@@ -11,4 +11,5 @@ class Todo extends React.Component {
     }
 }
 
+// 다른 파일에서 사용할 수 있도록 클래스 만들면 항상 export 시켜줘야 함.
 export default Todo;
