@@ -1,4 +1,5 @@
 import React from "react";
+import {ListItem, ListItemText, InputBase, Checkbox} from "@material-ui/core";
 
 class Todo extends React.Component {
     constructor(props) {
@@ -7,19 +8,27 @@ class Todo extends React.Component {
     }
 
     render() {
+        const item = this.props.item;
+
         return (
-            <div className="Todo">
-                <input 
-                    type="checkbox" 
-                    id={this.state.item.id} 
-                    name={this.state.item.id} 
-                    checked={this.state.item.done} 
+            <ListItem>
+                <Checkbox checked={item.done} />
+                <ListItemText>
+                    <InputBase
+                    inputProps={{"aria-label": "naked"}}
+                    type="text"
+                    id={item.id}
+                    name={item.id}
+                    value={item.title}
+                    multiline={true}
+                    fullWidth={true}
                     />
-                <label id={this.state.item.id}>{this.state.item.title}</label>
-            </div>
+                </ListItemText>
+            </ListItem>
         );
     }
 }
 
 // 다른 파일에서 사용할 수 있도록 클래스 만들면 항상 export 시켜줘야 함.
+// default: import 시 {} 필요 없음
 export default Todo;

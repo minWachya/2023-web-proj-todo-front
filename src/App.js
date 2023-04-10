@@ -1,6 +1,7 @@
 import Todo from './Todo';
 import React from 'react';
 import './App.css';
+import {Paper, List} from "@material-ui/core";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,15 +17,19 @@ class App extends React.Component {
 
   render() {
     // Todo 컴포넌트 배열 생성
-    var todoItems = this.state.items.map(
-      (item, index) => (
-        <Todo item={item} />
-      )
-    );
+    // 앞 문장 참이면 && 뒤 문장 실행
+    var todoItems = this.state.items.length > 0 && (
+      <Paper style={{margin: 16}}>
+        <List>
+          {this.state.items.map((item, idx) => (
+            <Todo item={item} key={item.id}/>
+          ))}
+        </List>
+      </Paper>
+    )
     
     return (
       <div className='App'>
-        
         {/* Todo 컴포넌트 여러 개 */}
         {todoItems}
         {
