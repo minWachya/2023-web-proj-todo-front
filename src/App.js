@@ -16,6 +16,19 @@ class App extends React.Component {
     };
   }
 
+  // todo list에 데이터 추가하는 함수: AddTodo에 전달
+  add = (item) => {
+    // todo 객체 생성
+    const thisItems = this.state.items;
+    item.id = "ID-" + thisItems.length;
+    item.done = false;
+    thisItems.push(item);
+    // 업데이트: setState통해 ui 다시 그림
+    this.setState({items: thisItems});
+    console.log("items: ",  this.state.items);
+  }
+
+
   render() {
     // Todo 컴포넌트 배열 생성
     // 앞 문장 참이면 && 뒤 문장 실행
@@ -32,7 +45,7 @@ class App extends React.Component {
     return (
       <div className='App'>
         <Container maxWidth="md">
-          <AddTodo />
+          <AddTodo add={this.add}/>
           <div className='TodoList'>{todoItems}</div>
         </Container>
         {/* 긴 주석 */}
