@@ -1,7 +1,8 @@
 import Todo from './Todo';
 import React from 'react';
+import AddTodo from './AddTodo.js'
 import './App.css';
-import {Paper, List} from "@material-ui/core";
+import {Paper, List, Container} from "@material-ui/core";
 
 class App extends React.Component {
   constructor(props) {
@@ -30,8 +31,11 @@ class App extends React.Component {
     
     return (
       <div className='App'>
-        {/* Todo 컴포넌트 여러 개 */}
-        {todoItems}
+        <Container maxWidth="md">
+          <AddTodo />
+          <div className='TodoList'>{todoItems}</div>
+        </Container>
+        {/* 긴 주석 */}
         {
           // 한줄 주석은 요로코롬.
         }
