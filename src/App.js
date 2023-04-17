@@ -27,6 +27,16 @@ class App extends React.Component {
     this.setState({items: thisItems});
     console.log("items: ",  this.state.items);
   }
+  
+  // todo list의 데이터 삭제하는 함수: Todo에 전달
+  delete = (item) => {
+    const thisItems = this.state.items;
+    // 삭제할 id 외의 아이템만 newItems에 답기
+    const newItems = thisItems.filter(e => e.id !== item.id);
+    this.setState({items: newItems}, () => {
+      console.log("Update Items: ", this.state.items)
+    });
+  }
 
 
   render() {
@@ -36,7 +46,7 @@ class App extends React.Component {
       <Paper style={{margin: 16}}>
         <List>
           {this.state.items.map((item, idx) => (
-            <Todo item={item} key={item.id}/>
+            <Todo item={item} key={item.id} delete={this.delete}/>
           ))}
         </List>
       </Paper>
