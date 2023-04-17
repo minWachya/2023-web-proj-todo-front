@@ -5,13 +5,35 @@ import { DeleteOutlined } from "@material-ui/icons";
 class Todo extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {item: props.item};
+        this.state = {item: props.item, readOnly: true}; // readOnly: true-수정 불가 false-수정 가능
         this.delete = props.delete;
     }
 
     deleteEventHandler = () => {
         this.delete(this.state.item)
     }
+    
+    // todo text부분 클릭 시 title 수정 가능 상태로 변경
+    offReadOnlyMode = () => {
+        this.setState({"readOnly": false}, () => {
+            console.log("ReadOnly? ", this.state.readOnly)
+        });
+    }
+
+    // todo title 수정할 때마다 title 값 갱신
+    editEventHandler = (event) => {
+        const thisItem = this.state.item;
+        thisItem.title = event.target.value;
+        this.setState({item: thisItem});
+    }
+
+    // todo title 수정 후 엔터 누를 때 수정 불가 상태로 변경
+    enterKeyEventHandler = (event) => {
+        if(event.key === "Enter") {
+            this.setState({readOnly: true});
+        }
+    }
+    
 
     render() {
         const item = this.props.item;
@@ -21,13 +43,16 @@ class Todo extends React.Component {
                 <Checkbox checked={item.done} />
                 <ListItemText>
                     <InputBase
-                    inputProps={{"aria-label": "naked"}}
+                    inputProps={{"aria-label": "naked", readOnly: this.state.readOnly}}
                     type="text"
                     id={item.id}
                     name={item.id}
                     value={item.title}
                     multiline={true}
                     fullWidth={true}
+                    onClick={this.offReadOnlyMode} // readOnly 모드 끄기: 수정 가능
+                    onChange={this.editEventHandler} // title 갱신
+                    onKeyPress={this.enterKeyEventHandler} // readOnly 모드 켜기: 수정 불가
                     />
                 </ListItemText>
                 <ListItemSecondaryAction>
