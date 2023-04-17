@@ -33,6 +33,12 @@ class Todo extends React.Component {
             this.setState({readOnly: true});
         }
     }
+
+    checkboxEventHandler = (event) => {
+        const thisItem = this.state.item;
+        thisItem.done = !thisItem.done;
+        this.setState({item: thisItem});
+    }
     
 
     render() {
@@ -40,7 +46,7 @@ class Todo extends React.Component {
 
         return (
             <ListItem>
-                <Checkbox checked={item.done} />
+                <Checkbox checked={item.done} onChange={this.checkboxEventHandler}/>
                 <ListItemText>
                     <InputBase
                     inputProps={{"aria-label": "naked", readOnly: this.state.readOnly}}
