@@ -13,6 +13,28 @@ class App extends React.Component {
     };
   }
 
+  // 리액트는 내부적으로 ReactDom(Virtual DOM) 트리 갖고있음
+  // 컴포넌트 상태 변경 시 Virtual DOM에 반영된 후 브라주더의 HTML DOM이 변경됨
+  // 마운팅: 각 컴포넌트 생성자와 render함수 호출하여 자신의 DOM 트리 구성
+  // componentDidMount: 마운팅 마친 후 호출하는 함수: 마운팅 다 안된 상태에서 백엔드 요청 일어나면 오류발생가능성 있음
+  componentDidMount() {
+    const requestOptions = {
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+    };
+
+    fetch("http://localhost:8080/todo", requestOptions)
+      .then((response) => response.json()) // 반환 타입 Promise. string인 response를 json으로 변환
+      .then( // them(cb1, cb2): cb1-성공 시 콜백 함수, cb2-실패 시 콜백 함수
+        (response) => {
+          this.setState({items: response.data,});
+        },
+        (error) => {
+          this.setState({error,});
+        }
+      )
+  }
+
   // todo list에 데이터 추가하는 함수: AddTodo에 전달
   add = (item) => {
     // todo 객체 생성
