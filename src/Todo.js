@@ -7,6 +7,7 @@ class Todo extends React.Component {
         super(props);
         this.state = {item: props.item, readOnly: true}; // readOnly: true-수정 불가 false-수정 가능
         this.delete = props.delete;
+        this.update = props.update;
     }
 
     deleteEventHandler = () => {
@@ -28,9 +29,11 @@ class Todo extends React.Component {
     }
 
     // todo title 수정 후 엔터 누를 때 수정 불가 상태로 변경
+    // 및 저장
     enterKeyEventHandler = (event) => {
         if(event.key === "Enter") {
             this.setState({readOnly: true});
+            this.update(this.state.item);
         }
     }
 
@@ -38,6 +41,7 @@ class Todo extends React.Component {
         const thisItem = this.state.item;
         thisItem.done = !thisItem.done;
         this.setState({item: thisItem});
+        this.update(this.state.item);
     }
     
 

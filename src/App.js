@@ -40,6 +40,13 @@ class App extends React.Component {
     );
   };
 
+  // todo 수정하는 함수: Todo에 전달
+  update = (item) => {
+    call("/todo", "PUT", item).then((response) => 
+      this.setState({items: response.data})
+    );
+  };
+
 
   render() {
     // Todo 컴포넌트 배열 생성
@@ -48,7 +55,12 @@ class App extends React.Component {
       <Paper style={{margin: 16}}>
         <List>
           {this.state.items.map((item, idx) => (
-            <Todo item={item} key={item.id} delete={this.delete}/>
+            <Todo 
+              item={item} 
+              key={item.id} 
+              delete={this.delete}
+              update={this.update}
+              />
           ))}
         </List>
       </Paper>
