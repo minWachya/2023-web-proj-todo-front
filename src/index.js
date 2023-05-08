@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import AppRouter from './AppRouter';
 import reportWebVitals from './reportWebVitals';
 
 const root = document.getElementById('root');
 ReactDOM.render(  // ReactDOM.render(react 컴포넌트, 부모 엘리먼트): 부모 엘리먼트 아래에 컴포넌트 달아라
   <React.StrictMode>
-    <App />
+    <AppRouter />
   </React.StrictMode>, root
 );
 
