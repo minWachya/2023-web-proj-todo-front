@@ -1,14 +1,22 @@
 import { API_BASE_URL } from "../app-config"
+const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 // Promise 객체 리턴
 export function call(api, method, request) {
+    // 토큰을 헤더에 추가
+    let headers = new Headers({
+        "Content-Type": "application/json",
+    });
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    if(accessToken && accessToken !== null) {
+        headers.append("Authorization", "Bearer " + accessToken);
+    }
     let options = {
-        headers: new Headers({
-            "Content-Type": "application/json",
-        }),
+        headers: headers,
         url: API_BASE_URL + api,
         method: method,
     };
+    
     // 요청 데이터 있으면 body에 담음
     if(request) {
         options.body = JSON.stringify(request); // 문자열로 변환
@@ -37,7 +45,9 @@ export function call(api, method, request) {
 export function signin(userDTO) {
     return call("/auth/signin", "POST", userDTO)
         .then((response) => {
-            console.log("response: ", response);
-            alert("로그인 토큰: " + response.token);
+            // 토큰 저장
+            localStorage.setItem(ACCESS_TOKEN, response.token);
+            // 리다이렉트
+            window.location.href = "/";
         });
     }
