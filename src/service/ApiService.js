@@ -15,12 +15,21 @@ export function call(api, method, request) {
     }
 
     // 서버에 요청 후 응답 받아옴. Promise 반환함
-    return fetch(options.url, options).then((response) => 
-        response.json().then((json) => {
-            if(!response.ok) {
-                return Promise.reject(json);
+    return fetch(options.url, options)
+        .then((response) => 
+            response.json().then((json) => {
+                if(!response.ok) {
+                    return Promise.reject(json);
+                }
+                return json;
+            })
+        )
+        // 로그인 안 한 상태일 때 로그인 화면으로 리다이렉트
+        .catch((error) => {
+            console.log(error.status);
+            if(error.status === 403) {
+                window.location.href = "/login"; // redirect
             }
-            return json;
-        })
-    );
+            return Promise.reject(error);
+        });
 }

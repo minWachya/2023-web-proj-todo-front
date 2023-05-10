@@ -9,8 +9,8 @@ import Typography from "@material-ui/core/Typography";
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {"Copyright "}
-            fsoftwareemgineer, {new Date().getFullYear()}
+            {"Copyright ⓒ"}
+            fsoftwareengineer, {new Date().getFullYear()}
             {"."}
         </Typography>
     );
