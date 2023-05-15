@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import App from "./App";
 import Login from "./Login";
+import SignUp from "./SignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
@@ -27,6 +28,10 @@ class AppRouter extends React.Component {
                             {/* 로그인 렌더링: localhost:3000/login */}
                             <Route path="/login">
                                 <Login />
+                            </Route>
+                            {/* 회원가입 컴포넌트 렌더링: localhost:3000/signup */}
+                            <Route path="/signup">
+                                <SignUp />
                             </Route>
                             {/* App 컴포넌트 렌더링: localhost:3000/ */}
                             <Route path="/">
