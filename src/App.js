@@ -10,7 +10,8 @@ class App extends React.Component {
     super(props);
     // 나중에 백엔드에서 받아 올 데이터. 지금 이건 더미 데이터임.
     this.state = {
-      items: []
+      items: [],
+      loading: true,
     };
   }
 
@@ -22,7 +23,7 @@ class App extends React.Component {
   // 이걸 허락해줘야 처음 리소스 제공항 도메인이 현재 요청하려는 도메인과 다르더라고 요청을 허락해줌
   componentDidMount() {
     call("/todo", "GET", null).then((response) => 
-      this.setState({items: response.data})
+      this.setState({items: response.data, loading: false})
     );
   }
 
@@ -81,14 +82,31 @@ class App extends React.Component {
         </Toolbar>
       </AppBar>
     );
-    
-    return (
-      <div className='App'>
+
+    // 로딩 중 아닐 떄: 아이템 리스트 화면
+    var todoListPage = (
+      <div>
         {navigationBar}
         <Container maxWidth="md">
           <AddTodo add={this.add}/>
           <div className='TodoList'>{todoItems}</div>
         </Container>
+      </div>
+    );
+
+    // 로딩 중일 때: 로딩 화면
+    var loadingPage = <h1>로딩중...</h1>;
+
+    // 기본 컨텐츠를 로딩 화면으로 초기화
+    var content = loadingPage;
+
+    if(!this.state.loading) {
+      content = todoListPage;
+    }
+    
+    return (
+      <div className='App'>
+        {content}
         {/* 긴 주석 */}
         {
           // 한줄 주석은 요로코롬.
