@@ -1,45 +1,47 @@
 import React from "react";
-import { signin } from "./service/ApiService";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { Container } from "@material-ui/core";
+import { signup } from "./service/ApiService";
+import { Button, TextField, Link, Grid, Container, Typography } from "@material-ui/core";
 
-
-class Login extends React.Component {
+class SignUp extends React.Component {
     constructor(props) {
-        super(props);   
-        // this: Login
-        // 이거 안 하면 함수 작성 시 this가 Login이 아니라 window로 되어버림. 여기 예제에서는 필요 없긴 한데...
+        super(props);  
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // 작성된 이메일, 비밀번호를 가지고 로그인 요청
+    // 작성된 이메일, 비밀번호를 가지고 회원가입 요청
     handleSubmit(event) {
         // submit 클릭 시 고유 동작 막아줌
         event.preventDefault();
         // 데이터 가져오기
         const data = new FormData(event.target);
+        const username = data.get("username");
         const email = data.get("email");
         const password = data.get("password");
         // 요청
-        signin({email: email, password: password});
+        signup({email: email,  username: username, password: password}).then((response) => {
+            // 회원가입 성공 시 로그인 화면으로 이동
+            window.location.href = "/login";
+        });
     }
 
     render() {
         return (
             <Container component="main" maxWidth="xs" style={{marginTop: "8%"}}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        {/* h5 스타일 적용 후 최종적으로 h1로 만들어라 */}
-                        <Typography component="h1" variant="h5">로그인</Typography>
-                    </Grid>
-                </Grid>
-
                 <form noValidate onSubmit={this.handleSubmit}>
-                    {" "} {/* 간격 띄우기 */}
                     <Grid container spacing={2}>
+                         <Grid item xs={12}>
+                            <Typography component="h1" variant="h5">계정 생성</Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="username"
+                                label="사용자 이름"
+                                name="username"
+                                autoComplete="fname" />
+                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -56,7 +58,7 @@ class Login extends React.Component {
                                 required
                                 fullWidth
                                 id="password"
-                                label="비밀번호"
+                                label="패스워드"
                                 name="password"
                                 autoComplete="current-pasword" />
                         </Grid>
@@ -65,7 +67,12 @@ class Login extends React.Component {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary">로그인</Button>
+                                color="primary">계정 생성</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container justifyContent="flex-end">
+                        <Grid item>
+                            <Link herf="/login" variant="body2">이미 계정이 있습니까? 로그인 하세요.</Link> 
                         </Grid>
                     </Grid>
                 </form>
@@ -74,4 +81,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default SignUp;
