@@ -51,3 +51,10 @@ export function signin(userDTO) {
             window.location.href = "/";
         });
     }
+
+export function signout() {
+    // 토큰 삭제
+    localStorage.setItem(ACCESS_TOKEN, null);
+    // 리다이렉트
+    window.location.href = "/login";
+    }
