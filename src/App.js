@@ -2,8 +2,8 @@ import Todo from './Todo';
 import React from 'react';
 import AddTodo from './AddTodo.js'
 import './App.css';
-import {Paper, List, Container} from "@material-ui/core";
-import { call } from "./service/ApiService";
+import {Paper, List, Container, Grid, Button, AppBar, Toolbar, Typography } from "@material-ui/core";
+import { call, signout } from "./service/ApiService";
 
 class App extends React.Component {
   constructor(props) {
@@ -65,9 +65,26 @@ class App extends React.Component {
         </List>
       </Paper>
     )
+
+    // 앱바( 툴바 ( 그리드 )  )
+    // 앱바: 화면 전체에 대한 정보, 액션 제공
+    // 툴바: 컴포넌트들을 한 행에 보이게 하는 컨테이너
+    var navigationBar = (
+      <AppBar position='static'>
+        <Toolbar>
+          <Grid justifyContent="space-between" container>
+            <Typography variant='h6'>오늘의 할일</Typography>
+          </Grid>
+          <Grid>
+            <Button color='inherit' onClick={signout}>로그아웃</Button>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    );
     
     return (
       <div className='App'>
+        {navigationBar}
         <Container maxWidth="md">
           <AddTodo add={this.add}/>
           <div className='TodoList'>{todoItems}</div>
